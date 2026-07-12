@@ -7,7 +7,7 @@ USERNAME = "Vedanthdamn"
 TOKEN = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
 
 # used only if no token is available (local testing without network/auth)
-FALLBACK_STATS = {"repos": 20, "stars": 16, "commits": 403, "followers": 3}
+FALLBACK_STATS = {"repos": 20, "stars": 16, "commits": 531, "followers": 3}
 
 
 def fetch_stats():
