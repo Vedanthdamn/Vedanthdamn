@@ -1,6 +1,6 @@
 # VedanthDama
 
-```coffeescript
+```makefile
 ████████████████▀╙    └▀██████████████  vedanth@github
 ██████████████▌           ████████████  --------------
 █████████████Ü   ╣▒▒╠▒░    ███████████  OS: ...................... macOS (MacBook Air M4), iPadOS, iOS
