@@ -9,7 +9,7 @@ CACHE_FILE = "cache/loc_cache.json"
 
 # used only if no token is available (local testing without network/auth)
 FALLBACK_STATS = {"repos": 20, "stars": 16, "commits": 531, "followers": 3,
-                   "loc_add": 48213, "loc_del": 9107, "loc_net": 39106}
+                   "loc_add": 0, "loc_del": 0, "loc_net": 0}
 
 
 def gh_graphql(query, variables):
