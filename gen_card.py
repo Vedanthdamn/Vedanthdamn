@@ -19,7 +19,7 @@ def fetch_stats():
     query($login: String!, $cursor: String) {
       user(login: $login) {
         followers { totalCount }
-        repositories(first: 100, after: $cursor, ownerAffiliations: [OWNER], isFork: false) {
+        repositories(first: 100, after: $cursor, ownerAffiliations: [OWNER]) {
           totalCount
           pageInfo { hasNextPage endCursor }
           nodes { stargazerCount }
