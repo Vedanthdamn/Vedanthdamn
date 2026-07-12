@@ -88,7 +88,9 @@ PALETTES = {
 
 # a field renders on one line if it fits under this budget, otherwise
 # label goes on its own line and the value wraps to an indented line below
-WRAP_THRESHOLD = 30
+WRAP_THRESHOLD = 34
+
+GAP = "GAP"  # marker for a half-height spacer row between sections
 
 
 def build_info(pal, stats):
@@ -109,19 +111,19 @@ def build_info(pal, stats):
     info += field("Host", "SRM Institute of Science & Tech")
     info += field("Kernel", "B.Tech CSE (AI & ML), Batch 2028")
     info += field("IDE", "VS Code, Claude Code, Xcode")
-    info.append([])
+    info.append(GAP)
     info += field("Languages.Programming", "Python, TypeScript, JavaScript, C++, Swift")
     info += field("Languages.Frameworks", "React, Next.js, FastAPI, PyTorch")
     info += field("Languages.Real", "English")
-    info.append([])
+    info.append(GAP)
     info += field("Hobbies", "Travel, creative writing, motorcycles")
-    info.append([])
+    info.append(GAP)
     contact_hdr = "- Contact "
     info.append([(pal["SECTION"], contact_hdr + "-" * max(20 - len(contact_hdr), 3))])
     info += field("Email", "damavedanth@gmail.com")
     info += field("LinkedIn", "linkedin.com/in/vedanth-dama")
     info += field("GitHub", "Vedanthdamn")
-    info.append([])
+    info.append(GAP)
     stats_hdr = "- GitHub Stats "
     info.append([(pal["SECTION"], stats_hdr + "-" * max(20 - len(stats_hdr), 3))])
     info += field("Repos", str(stats["repos"]), number=True)
@@ -135,22 +137,37 @@ def build_info(pal, stats):
 ART_FONT_SIZE = 15
 ART_CHAR_W = ART_FONT_SIZE * 0.6
 ART_LINE_H = ART_FONT_SIZE * 1.35
-
-INFO_FONT_SIZE = 24
-INFO_CHAR_W = INFO_FONT_SIZE * 0.6
-INFO_LINE_H = INFO_FONT_SIZE * 1.35
+ART_WIDTH_PX = ART_COLS * ART_CHAR_W
+ART_HEIGHT_PX = ART_ROWS * ART_LINE_H
 
 PAD = 20
 GAP_PX = 46
+LINE_H_MULT = 1.28
+GAP_ROW_MULT = 0.45  # spacer rows between sections are shorter than a text row
 
 STATS = fetch_stats()
 _sample_info = build_info(PALETTES["dark"], STATS)
-INFO_ROWS = len(_sample_info)
-info_col_w_px = max((sum(len(t) for _, t in line) for line in _sample_info), default=0) * INFO_CHAR_W
 
-ART_WIDTH_PX = ART_COLS * ART_CHAR_W
-ART_HEIGHT_PX = ART_ROWS * ART_LINE_H
-INFO_HEIGHT_PX = INFO_ROWS * INFO_LINE_H
+
+def info_row_heights(info, font_size):
+    line_h = font_size * LINE_H_MULT
+    return [line_h * GAP_ROW_MULT if row == GAP else line_h for row in info]
+
+
+def fit_info_font_size(info, target_height_px, start=24, min_size=14):
+    """Shrinks the info font until its total rendered height fits within target_height_px."""
+    for size in range(start, min_size - 1, -1):
+        total = sum(info_row_heights(info, size))
+        if total <= target_height_px:
+            return size
+    return min_size
+
+
+INFO_FONT_SIZE = fit_info_font_size(_sample_info, ART_HEIGHT_PX)
+INFO_CHAR_W = INFO_FONT_SIZE * 0.6
+_row_heights = info_row_heights(_sample_info, INFO_FONT_SIZE)
+INFO_HEIGHT_PX = sum(_row_heights)
+info_col_w_px = max((sum(len(t) for _, t in line) for line in _sample_info if line != GAP), default=0) * INFO_CHAR_W
 
 WIDTH = PAD * 2 + ART_WIDTH_PX + GAP_PX + info_col_w_px
 HEIGHT = PAD * 2 + max(ART_HEIGHT_PX, INFO_HEIGHT_PX)
@@ -181,15 +198,17 @@ def build_svg(mode):
 
     info_x = PAD + ART_WIDTH_PX + GAP_PX
     parts.append(f'<g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="{INFO_FONT_SIZE}px" font-weight="600" xml:space="preserve">')
-    for r in range(INFO_ROWS):
-        if not info[r]:
-            continue
-        y = PAD + (r + 1) * INFO_LINE_H - INFO_LINE_H * 0.28
-        parts.append(f'<text x="{info_x:.1f}" y="{y:.1f}">')
-        for color, text in info[r]:
-            if text:
-                parts.append(f'<tspan fill="{color}">{esc(text)}</tspan>')
-        parts.append('</text>')
+    row_heights = info_row_heights(info, INFO_FONT_SIZE)
+    cursor_y = PAD
+    for row, h in zip(info, row_heights):
+        cursor_y += h
+        if row != GAP:
+            y = cursor_y - h * 0.28
+            parts.append(f'<text x="{info_x:.1f}" y="{y:.1f}">')
+            for color, text in row:
+                if text:
+                    parts.append(f'<tspan fill="{color}">{esc(text)}</tspan>')
+            parts.append('</text>')
     parts.append('</g>')
 
     parts.append('</svg>')
@@ -202,4 +221,4 @@ with open("light_mode.svg", "w") as f:
     f.write(build_svg("light"))
 
 print("stats", STATS)
-print("WIDTH", WIDTH, "HEIGHT", HEIGHT, "ART_ROWS", ART_ROWS, "INFO_ROWS", INFO_ROWS)
+print("WIDTH", WIDTH, "HEIGHT", HEIGHT, "ART_HEIGHT_PX", round(ART_HEIGHT_PX), "INFO_HEIGHT_PX", round(INFO_HEIGHT_PX), "INFO_FONT_SIZE", INFO_FONT_SIZE)
