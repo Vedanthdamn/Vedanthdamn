@@ -260,7 +260,8 @@ def build_info(pal, stats):
     info += field("Languages.Frameworks", "React, Next.js, FastAPI, PyTorch")
     info += field("Languages.Real", "English")
     info.append(GAP)
-    info += field("Hobbies", "Travel, creative writing, motorcycles")
+    info += field("Hobbies", "Travel, Shopping, Coding, Sports
+    ")
     info.append(GAP)
     contact_hdr = "- Contact "
     info.append([(pal["SECTION"], contact_hdr + "-" * max(20 - len(contact_hdr), 3))])
