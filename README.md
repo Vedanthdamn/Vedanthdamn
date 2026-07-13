@@ -1,4 +1,4 @@
-# VedanthDama
+# Vedanth Dama
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="dark_mode.svg">
