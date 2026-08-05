@@ -66,10 +66,10 @@
     "my_commits": 17
   },
   "Vedanthdamn/Race-Through-Circuits": {
-    "additions": 4289,
-    "commit_count": 18,
-    "deletions": 124,
-    "my_commits": 18
+    "additions": 4636,
+    "commit_count": 23,
+    "deletions": 149,
+    "my_commits": 23
   },
   "Vedanthdamn/RouteIQ": {
     "additions": 9688,
@@ -127,7 +127,7 @@
   },
   "Vedanthdamn/Vedanthdamn": {
     "additions": 1136,
-    "commit_count": 48,
+    "commit_count": 49,
     "deletions": 715,
     "my_commits": 24
   },
@@ -148,5 +148,11 @@
     "commit_count": 17,
     "deletions": 1,
     "my_commits": 2
+  },
+  "Vedanthdamn/oslokio": {
+    "additions": 1004,
+    "commit_count": 8,
+    "deletions": 27,
+    "my_commits": 8
   }
 }
