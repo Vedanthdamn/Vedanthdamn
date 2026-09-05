@@ -1,9 +1,21 @@
 {
+  "Dang-ctrl/Allotrope": {
+    "additions": 10894,
+    "commit_count": 29,
+    "deletions": 220,
+    "my_commits": 15
+  },
   "HelloOjasMutreja/Rayquaza": {
     "additions": 13911,
     "commit_count": 218,
     "deletions": 1326,
     "my_commits": 40
+  },
+  "Vedanthdamn/Allotrope": {
+    "additions": 10859,
+    "commit_count": 28,
+    "deletions": 194,
+    "my_commits": 14
   },
   "Vedanthdamn/Auralis.ai": {
     "additions": 25172,
@@ -90,10 +102,10 @@
     "my_commits": 62
   },
   "Vedanthdamn/Neuroright": {
-    "additions": 0,
-    "commit_count": 0,
-    "deletions": 0,
-    "my_commits": 0
+    "additions": 1134,
+    "commit_count": 11,
+    "deletions": 18,
+    "my_commits": 11
   },
   "Vedanthdamn/Oslo": {
     "additions": 15952,
@@ -175,7 +187,7 @@
   },
   "Vedanthdamn/Vedanthdamn": {
     "additions": 1136,
-    "commit_count": 79,
+    "commit_count": 80,
     "deletions": 715,
     "my_commits": 24
   },
